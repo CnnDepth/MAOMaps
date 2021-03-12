@@ -1,11 +1,13 @@
-**TODO**: Add info about MapMerging, Habitat-sim, etc.
+## Dataset description
 
-**Link to data**
+MAOMaps is a dataset for evaluation of Visual SLAM, RGB-D SLAM and Map Merging algorithms. It contains 40 samples with RGB and depth images, and ground truth trajectories and maps. These 40 samples are joined into 20 pairs of overlapping maps for map merging methods evaluation. The samples were collected using [Matterport3D](https://niessner.github.io/Matterport/) dataset and [Habitat](https://aihabitat.org/) simulator.
+
+### Link to data
 
 The dataset is available [here](https://drive.google.com/drive/folders/1K88CglO9go3K4pJn_YUZCuWnT8yALefI).
 
 
-**Dataset structure**
+### Dataset structure
 
 The dataset contains 20 pairs of trajectories. Each pair is stored in its own subdirectory.
 
@@ -21,6 +23,6 @@ Each sample contains:
 
 * `gt_colors_merged.txt` - colors of points of merged ground truth map in RGB format.
 
-**Tools for evaluation**
+## Toolbox
 
-The toolbox will be available here soon.
+TODO
