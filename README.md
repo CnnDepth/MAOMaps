@@ -1,3 +1,5 @@
+**TODO**: Add info about MapMerging, Habitat-sim, etc.
+
 **Link to data**
 
 The dataset is available [here](https://drive.google.com/drive/folders/1K88CglO9go3K4pJn_YUZCuWnT8yALefI).
