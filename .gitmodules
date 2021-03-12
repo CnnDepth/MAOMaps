@@ -1,0 +1,3 @@
+[submodule "habitat_ros"]
+	path = habitat_ros
+	url = https://github.com/CnnDepth/habitat_ros
