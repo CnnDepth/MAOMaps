@@ -1,6 +1,0 @@
-[submodule "habitat_ros"]
-	path = habitat_ros
-	url = https://github.com/CnnDepth/habitat_ros
-[submodule "slam_comparison"]
-	path = slam_comparison
-	url = https://github.com/cnndepth/slam_comparison

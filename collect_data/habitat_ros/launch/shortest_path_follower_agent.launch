@@ -1,0 +1,11 @@
+<launch>
+<node pkg="habitat_ros" type="main.py" name="habitat_agent" output="screen">
+  <param name="task_config" value="/home/kirill/habitat-lab/configs/tasks/pointnav_mp3d.yaml"/>
+  <param name="agent_type" value="shortest_path_follower"/>
+  <param name="rgb_topic" value="/habitat/rgb/image"/>
+  <param name="depth_topic" value="/habitat/depth/image"/>
+  <param name="camera_info_topic" value="/habitat/rgb/camera_info"/>
+  <param name="true_pose_topic" value="/true_pose"/>
+  <param name="camera_calib" value="/home/kirill/catkin_ws/src/tx2_fcnn_node/calib/habitat_camera_calib.yaml"/>
+</node>
+</launch>

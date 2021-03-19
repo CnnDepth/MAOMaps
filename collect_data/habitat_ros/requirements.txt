@@ -1,0 +1,4 @@
+numpy
+gym
+keyboard
+cv_bridge
