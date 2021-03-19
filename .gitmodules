@@ -1,0 +1,9 @@
+[submodule "collect_data/--force"]
+	path = collect_data/--force
+	url = https://github.com/CnnDepth/habitat_ros
+[submodule "evaluate/slam_comparison"]
+	path = evaluate/slam_comparison
+	url = https://github.com/CnnDepth/slam_comparison
+[submodule "collect_data/habitat_ros"]
+	path = collect_data/habitat_ros
+	url = https://github.com/CnnDepth/habitat_ros
