@@ -44,7 +44,11 @@ Each sample contains:
 
 * `gt_points_first.pcd`, `gt_points_second.pcd` - ground truth maps stored as point clouds, for first and second trajectory of the pair.
 
+* `gt_points_first.txt`, `gt_points_second.txt` - ground truth maps coordinates in text format, for first and second trajectory of the pair.
+
 * `gt_points_merged.pcd` - merged ground truth map in Pointcloud format.
+
+* `gt_points_merged.txt` - merged ground truth map points in text format.
 
 * `gt_colors_first.txt`, `gt_colors_second.txt` - colors of points of first and second ground truth map in RGB format.
 
