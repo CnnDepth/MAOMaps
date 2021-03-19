@@ -54,6 +54,77 @@ Each sample contains:
 
 * `gt_colors_merged.txt` - colors of points of merged ground truth map in RGB format.
 
+* `gt_poses_first.txt`, `gt_poses_second.txt` - ground truth trajectories stores as a set of 6D poses.
+
 ## Toolbox
 
-TODO
+This toolbox contains scripts for VSLAM and Map Merging algorithms evaluation (stored in [evaluate](https://github.com/CnnDepth/MAOMaps/tree/master/evaluate) folder) and scripts for dataset expanding (stored in [collect_data](https://github.com/CnnDepth/MAOMaps/tree/master/collect_data) folder).
+
+### Evaluate
+
+To use this part of toolbox, clone [slam_comparison](https://github.com/CnnDepth/slam_comparison) repo into your ROS workspace and build it.
+
+**Usage example: estimate RTAB-MAP quality**
+
+1. Open terminal, and run Ros master node:
+
+`roscore`
+
+2. Open another terminal, enter the dataset directory, and play some rosbag of the dataset, e.g.
+
+`rosbag play sample1/first.bag`
+
+3. In third terminal, launch the SLAM:
+
+`roslaunch rtabmap_ros rtabmap.launch`
+
+4. Create directory `sample1/eval_rtabmap`
+
+5. In fourth terminal, run pointcloud saver:
+
+`rosrun pointcloud_processing pointcloud_subscriber /octomap_occupied_space ./sample1/eval_rtabmap/slam_points.txt ./sample1/eval_rtabmap/slam_colors.txt`
+
+6. After rosbag stops, and SLAM finishes building map, stop pointcloud saver node in fourth terminal using `Ctrl-C` command
+
+7. Copy file `sample1/gt_points_first.txt` as `sample1/eval_rtabmap/slam_points.txt`
+
+8. Copy file `sample1/gt_poses_first.txt` to `sample1/eval_rtabmap` directory
+
+9. Compute the absolute mapping error of the SLAM:
+
+`rosrun pointcloud_processing octomap_processing ./sample1/eval_rtabmap abs nearest ./sample1/eval_rtabmap/results.txt`
+
+### Collect_data
+
+To use this part of toolbox, clone [habitat_ros](https://github.com/CnnDepth/habitat_ros) repo into your ROS workspace and build it.
+
+**Usage example: create 21st sample of the dataset**
+
+
+1. Open terminal, and run Ros master node:
+
+`roscore`
+
+2. Open another terminal, and run Habitat keyboard agent:
+
+`roslaunch habitat_ros keyboard_agent.launch`
+
+3. Create directory `sample21`
+
+4. In third terminal, record Rosbag from Habitat:
+
+`rosbag record /habitat/rgb/image /habitat/depth/image /habitat/rgb/camera_info /true_pose -O sample21/first.bag`
+
+5. After recording, play this rosbag:
+
+`rosbag play sample21/first.bag`
+
+6. In fourth terminal, create ground-truth map of the rosbag:
+
+`python collect_data/gt_map_creator.py ./sample21/gt_points_first.txt ./sample21/gt_colors_first.txt 0.0`
+
+7. In fifth terminal, create ground-truth trajectory of the rosbag:
+
+`python collect_data/gt_path_writer.py ./sample21/gt_poses_first.txt`
+
+8. After rosbag ends, interrupt ROS loops in fourth and fifth terminal using `Ctrl-C` command.
