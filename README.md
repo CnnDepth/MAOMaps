@@ -70,7 +70,9 @@ To use this part of toolbox, clone [slam_comparison](https://github.com/CnnDepth
 
 1. Open terminal, and run Ros master node:
 
-`roscore`
+```bash
+roscore
+```
 
 2. Open another terminal, enter the dataset directory, and play some rosbag of the dataset, e.g.
 
