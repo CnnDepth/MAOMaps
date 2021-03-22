@@ -8,7 +8,7 @@ The dataset is available [here](https://drive.google.com/drive/folders/1K88CglO9
 
 To use this dataset in your research, please cite the paper: `TBA`.
 
-![Image](img/maomaps_screen.png?raw=true "Title")
+[![Sample running demo](img/maomaps_screen.png)](https://youtu.be/3JKfnUo2So8)
 
 ### Samples information
 
@@ -76,17 +76,23 @@ roscore
 
 2. Open another terminal, enter the dataset directory, and play some rosbag of the dataset, e.g.
 
-`rosbag play sample1/first.bag`
+```bash
+rosbag play sample1/first.bag
+```
 
 3. In third terminal, launch the SLAM:
 
-`roslaunch rtabmap_ros rtabmap.launch`
+```bash
+roslaunch rtabmap_ros rtabmap.launch
+```
 
 4. Create directory `sample1/eval_rtabmap`
 
 5. In fourth terminal, run pointcloud saver:
 
-`rosrun pointcloud_processing pointcloud_subscriber /octomap_occupied_space ./sample1/eval_rtabmap/slam_points.txt ./sample1/eval_rtabmap/slam_colors.txt`
+```bash
+rosrun pointcloud_processing pointcloud_subscriber /octomap_occupied_space ./sample1/eval_rtabmap/slam_points.txt ./sample1/eval_rtabmap/slam_colors.txt
+```
 
 6. After rosbag stops, and SLAM finishes building map, stop pointcloud saver node in fourth terminal using `Ctrl-C` command
 
@@ -96,39 +102,59 @@ roscore
 
 9. Compute the absolute mapping error of the SLAM:
 
-`rosrun pointcloud_processing octomap_processing ./sample1/eval_rtabmap abs nearest ./sample1/eval_rtabmap/results.txt`
+```bash
+rosrun pointcloud_processing octomap_processing ./sample1/eval_rtabmap abs nearest ./sample1/eval_rtabmap/results.txt
+```
 
 ### Collect_data
 
-To use this part of toolbox, clone [habitat_ros](https://github.com/CnnDepth/habitat_ros) repo into your ROS workspace and build it.
+To use this part of toolbox, clone [habitat_ros](https://github.com/CnnDepth/habitat_ros) repo into your ROS workspace and build it:
+
+```bash
+cd catkin_ws/src
+git clone https://github.com/CnnDepth/habitat_ros
+cd ..; catkin_make;
+```
 
 **Usage example: create 21st sample of the dataset**
 
 
 1. Open terminal, and run Ros master node:
 
-`roscore`
+```bash
+roscore
+```
 
 2. Open another terminal, and run Habitat keyboard agent:
 
-`roslaunch habitat_ros keyboard_agent.launch`
+```bash
+roslaunch habitat_ros keyboard_agent.launch
+```
 
 3. Create directory `sample21`
 
 4. In third terminal, record Rosbag from Habitat:
 
-`rosbag record /habitat/rgb/image /habitat/depth/image /habitat/rgb/camera_info /true_pose -O sample21/first.bag`
+```bash
+rosbag record /habitat/rgb/image /habitat/depth/image /habitat/rgb/camera_info /true_pose -O sample21/first.bag
+```
 
 5. After recording, play this rosbag:
 
-`rosbag play sample21/first.bag`
+```bash
+rosbag play sample21/first.bag
+```
 
 6. In fourth terminal, create ground-truth map of the rosbag:
 
-`python collect_data/gt_map_creator.py ./sample21/gt_points_first.txt ./sample21/gt_colors_first.txt 0.0`
+```bash
+python collect_data/gt_map_creator.py ./sample21/gt_points_first.txt ./sample21/gt_colors_first.txt 0.0
+```
 
 7. In fifth terminal, create ground-truth trajectory of the rosbag:
 
-`python collect_data/gt_path_writer.py ./sample21/gt_poses_first.txt`
+```bash
+python collect_data/gt_path_writer.py ./sample21/gt_poses_first.txt
+```
 
 8. After rosbag ends, interrupt ROS loops in fourth and fifth terminal using `Ctrl-C` command.
