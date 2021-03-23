@@ -64,7 +64,13 @@ This toolbox contains scripts for VSLAM and Map Merging algorithms evaluation (s
 
 ### Evaluate
 
-To use this part of toolbox, clone [slam_comparison](https://github.com/CnnDepth/slam_comparison) repo into your ROS workspace and build it.
+To use this part of toolbox, clone [slam_comparison](https://github.com/CnnDepth/slam_comparison) repo into your ROS workspace and build it:
+
+```bash
+cd ~/catkin_ws/src
+git clone https://github.com/CnnDepth/slam_comparison
+cd ..; catkin_make;
+```
 
 **Usage example: estimate RTAB-MAP quality**
 
@@ -111,7 +117,7 @@ rosrun pointcloud_processing octomap_processing ./sample1/eval_rtabmap abs neare
 To use this part of toolbox, clone [habitat_ros](https://github.com/CnnDepth/habitat_ros) repo into your ROS workspace and build it:
 
 ```bash
-cd catkin_ws/src
+cd ~/catkin_ws/src
 git clone https://github.com/CnnDepth/habitat_ros
 cd ..; catkin_make;
 ```
