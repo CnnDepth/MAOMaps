@@ -131,7 +131,11 @@ roscore
 roslaunch habitat_ros keyboard_agent.launch
 ```
 
-3. Create directory `sample21`
+3. Create directory `sample21` for new sample:
+
+```bash
+mkdir sample21
+```
 
 4. In third terminal, record Rosbag from Habitat:
 
@@ -139,22 +143,26 @@ roslaunch habitat_ros keyboard_agent.launch
 rosbag record /habitat/rgb/image /habitat/depth/image /habitat/rgb/camera_info /true_pose -O sample21/first.bag
 ```
 
-5. After recording, play this rosbag:
+5. Move agent through virtual environment using arrow keys on keyboard
+
+6. After end of movement, stop rosbag recording in third terminal using `Ctrl-C` command
+
+7. Play recorded rosbag:
 
 ```bash
 rosbag play sample21/first.bag
 ```
 
-6. In fourth terminal, create ground-truth map of the rosbag:
+8. In fourth terminal, create ground-truth map of the rosbag:
 
 ```bash
 python collect_data/gt_map_creator.py ./sample21/gt_points_first.txt ./sample21/gt_colors_first.txt 0.0
 ```
 
-7. In fifth terminal, create ground-truth trajectory of the rosbag:
+9. In fifth terminal, create ground-truth trajectory of the rosbag:
 
 ```bash
 python collect_data/gt_path_writer.py ./sample21/gt_poses_first.txt
 ```
 
-8. After rosbag ends, interrupt ROS loops in fourth and fifth terminal using `Ctrl-C` command.
+10. After rosbag ends, interrupt ROS loops in fourth and fifth terminal using `Ctrl-C` command.
