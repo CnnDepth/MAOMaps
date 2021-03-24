@@ -58,6 +58,8 @@ Each sample contains:
 
 * `gt_poses_first.txt`, `gt_poses_second.txt` - ground truth trajectories stores as a set of 6D poses.
 
+* `start_pose_first.txt`, `start_pose_second.txt` - ground truth start positions of first and second trajectory.
+
 ## Toolbox
 
 This toolbox contains scripts for VSLAM and Map Merging algorithms evaluation (stored in [evaluate](https://github.com/CnnDepth/MAOMaps/tree/master/evaluate) folder) and scripts for dataset expanding (stored in [collect_data](https://github.com/CnnDepth/MAOMaps/tree/master/collect_data) folder).
@@ -80,19 +82,23 @@ cd ..; catkin_make;
 roscore
 ```
 
-2. Open another terminal, enter the dataset directory, and play some rosbag of the dataset, e.g.
-
-```bash
-rosbag play sample1/first.bag
-```
-
-3. In third terminal, launch the SLAM:
+2. Open another terminal, and launch the SLAM:
 
 ```bash
 roslaunch rtabmap_ros rtabmap.launch
 ```
 
-4. Create directory `sample1/eval_rtabmap`
+3. In third terminal, enter the dataset directory, and play some rosbag of the dataset, e.g.
+
+```bash
+rosbag play sample1/first.bag
+```
+
+4. Create directory to store SLAM pointclouds:
+
+```bash
+mkdir sample1/eval_rtabmap
+```
 
 5. In fourth terminal, run pointcloud saver:
 
@@ -102,9 +108,19 @@ rosrun pointcloud_processing pointcloud_subscriber /octomap_occupied_space ./sam
 
 6. After rosbag stops, and SLAM finishes building map, stop pointcloud saver node in fourth terminal using `Ctrl-C` command
 
-7. Copy file `sample1/gt_points_first.txt` as `sample1/eval_rtabmap/slam_points.txt`
+7. Copy groundtruth map and trajectory into SLAM evaluation directory:
 
-8. Copy file `sample1/gt_poses_first.txt` to `sample1/eval_rtabmap` directory
+```bash
+cp sample1/gt_points_first.txt sample1/eval_rtabmap/gt_points.txt
+cp sample1/gt_poses_first.txt sample1/eval_rtabmap
+```
+
+8. Transform SLAM pointcloud into Habitat coordinate system:
+
+```bash
+python evaluate/pointcloud_transformer.py ./sample1/eval_rtabmap/slam_points.txt ./sample1/start_pose_first.txt -0.45
+mv sample1/eval_rtabmap/slam_points_transformed.txt sample1/eval_rtabmap/slam_points.txt
+```
 
 9. Compute the absolute mapping error of the SLAM:
 
