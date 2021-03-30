@@ -1,4 +1,6 @@
 import numpy as np
+import sys
+from skimage.io import imread
 
 
 def projection(pcd, resolution=0.05, max_obstacle_height=1.5):
@@ -52,10 +54,30 @@ def align_points(slam_map, gt_map, x, y, angle, map_x, map_y, shift, scale):
     return points_transformed, gt_points
 
 
-def compare(slam_map, gt_map, x, y, angle, map_x, map_y, shift, scale=1):
+def get_2d_ame(slam_map, gt_map, x, y, angle, map_x, map_y, shift, scale=1):
     slam_points, gt_points = align_points(slam_map, gt_map, x, y, angle, map_x, map_y, shift, scale)
     sum_dst = 0
     for pt in slam_points:
         dst = np.sqrt(np.sum((gt_points - pt) ** 2, axis=1)).min()
         sum_dst += dst
     return sum_dst * 0.05 / len(slam_points)
+
+
+if __name__ == '__main__':
+    gt_pcd_file = sys.argv[1]
+    slam_projmap_file = sys.argv[2]
+    start_pose_file = sys.argv[3]
+    map_x = float(sys.argv[4])
+    map_y = float(sys.argv[5])
+    if len(sys.argv) > 6:
+        correction_angle = float(sys.argv[6])
+    else:
+        correction_angle = 0
+    gt_pcd = np.loadtxt(gt_pcd_file)
+    slam_projmap = imread(slam_projmap_file)
+    gt_projmap, gt_shift = projection(gt_pcd)
+    with open(start_pose_file, 'r') as ff:
+        x, y, z = map(float, ff.readline().split())
+        angle = float(ff.readline().strip()) + np.pi
+    ame = get_2d_ame(slam_projmap, gt_projmap, x, y, angle + correction_angle, map_x, map_y, gt_shift)
+    print('AME value: {}'.format(ame))
