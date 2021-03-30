@@ -59,11 +59,3 @@ def compare(slam_map, gt_map, x, y, angle, map_x, map_y, shift, scale=1):
         dst = np.sqrt(np.sum((gt_points - pt) ** 2, axis=1)).min()
         sum_dst += dst
     return sum_dst * 0.05 / len(slam_points)
-
-
-def compare_points(slam_points, gt_points):
-    sum_dst = 0
-    for pt in slam_points:
-        dst = np.sqrt(np.sum((gt_points - pt) ** 2, axis=1)).min()
-        sum_dst += dst
-    return sum_dst * 0.05 / len(slam_points)
